@@ -21,6 +21,7 @@ import {
   Strike,
   Words,
   ramp,
+  useL,
   usePopAt,
   useSec,
 } from "./kit";
@@ -66,6 +67,7 @@ const In: React.FC<{
 
 /* ---------------- 1 · Jacob doesn't fish ---------------- */
 const Hook: React.FC = () => {
+  const { y, f } = useL();
   const sec = useSec();
   const day = Math.max(1, Math.round(ramp(sec, S[1].start, S[1].end) * 90));
   const receipt = usePopAt(S[2].start + 0.35);
@@ -74,21 +76,21 @@ const Hook: React.FC = () => {
       <Show
         a={0}
         b={S[1].start - 0.1}
-        style={{ left: 70, right: 70, top: 250 }}
+        style={{ left: 70, right: 70, top: y(250) }}
       >
-        <Words {...S[0]} size={150} />
+        <Words {...S[0]} size={f(150)} />
       </Show>
       <Show
         a={S[1].start}
         b={S[2].start - 0.05}
-        style={{ left: 70, right: 70, top: 230 }}
+        style={{ left: 70, right: 70, top: y(230) }}
       >
         <div style={{ textAlign: "center", fontFamily: FONT }}>
-          <Label size={30}>Day</Label>
+          <Label size={f(30)}>Day</Label>
           <div
             style={{
               fontWeight: 900,
-              fontSize: 300,
+              fontSize: f(300),
               letterSpacing: "-0.06em",
               lineHeight: 0.85,
               color: C.ink,
@@ -99,11 +101,11 @@ const Hook: React.FC = () => {
           </div>
         </div>
       </Show>
-      <Show a={S[2].start} b={99} style={{ left: 70, right: 70, top: 250 }}>
+      <Show a={S[2].start} b={99} style={{ left: 70, right: 70, top: y(250) }}>
         <Words
           {...S[2]}
           text="He bought a fishing rod."
-          size={130}
+          size={f(130)}
           accent={["rod."]}
         />
       </Show>
@@ -118,13 +120,13 @@ const Hook: React.FC = () => {
           justifyContent: "center",
         }}
       >
-        <Jacob height={900} />
+        <Jacob height={y(900)} />
       </div>
       <Bubble
         at={0.55}
         style={{
           left: 560,
-          top: 820,
+          top: y(820),
           opacity: sec < S[2].start ? undefined : 0,
         }}
       >
@@ -134,13 +136,13 @@ const Hook: React.FC = () => {
         style={{
           position: "absolute",
           right: 70,
-          top: 760,
+          top: y(760),
           opacity: receipt > 0.01 ? 1 : 0,
           transform: `translateY(${(1 - receipt) * 200}px) rotate(${4 - receipt * 2}deg)`,
         }}
       >
         <Card style={{ width: 380, padding: 28 }}>
-          <Label size={20}>Receipt &middot; Day 91</Label>
+          <Label size={f(20)}>Receipt &middot; Day 91</Label>
           <div
             style={{
               display: "flex",
@@ -149,10 +151,10 @@ const Hook: React.FC = () => {
               marginTop: 10,
             }}
           >
-            <Rod size={90} />
+            <Rod size={f(90)} />
             <b
               style={{
-                fontSize: 40,
+                fontSize: f(40),
                 fontWeight: 900,
                 letterSpacing: "-0.03em",
               }}
@@ -161,7 +163,7 @@ const Hook: React.FC = () => {
             </b>
           </div>
           <div style={{ marginTop: 14 }}>
-            <Stamp at={S[2].start + 0.6} color={C.ok} size={26}>
+            <Stamp at={S[2].start + 0.6} color={C.ok} size={f(26)}>
               Paid &#10003;
             </Stamp>
           </div>
@@ -186,6 +188,7 @@ const ADS = [
   { t: "New reel. New season.", bg: C.card, fg: C.ink, row: 1740, dir: 1 },
 ];
 const Ads: React.FC = () => {
+  const { y, f } = useL();
   const sec = useSec();
   const [a, b] = SCENES.ads;
   const u = (sec - a) / (b - a);
@@ -196,7 +199,7 @@ const Ads: React.FC = () => {
           key={ad.t}
           style={{
             position: "absolute",
-            top: ad.row,
+            top: y(ad.row),
             left: "50%",
             whiteSpace: "nowrap",
             padding: "18px 30px",
@@ -205,7 +208,7 @@ const Ads: React.FC = () => {
             color: ad.fg,
             fontFamily: FONT,
             fontWeight: 900,
-            fontSize: 64,
+            fontSize: f(64),
             letterSpacing: "-0.04em",
             textTransform: "uppercase",
             opacity: 0.35,
@@ -218,16 +221,16 @@ const Ads: React.FC = () => {
       <Show
         a={S[3].start}
         b={S[4].start - 0.1}
-        style={{ left: 70, right: 70, top: 780 }}
+        style={{ left: 70, right: 70, top: y(780) }}
       >
         <div style={{ position: "relative" }}>
-          <Words {...S[3]} size={120} color={C.paper} />
+          <Words {...S[3]} size={f(120)} color={C.paper} />
           <Strike at={S[3].end - 0.1} />
         </div>
       </Show>
-      <Show a={S[4].start} b={99} style={{ left: 70, right: 70, top: 780 }}>
+      <Show a={S[4].start} b={99} style={{ left: 70, right: 70, top: y(780) }}>
         <div style={{ position: "relative" }}>
-          <Words {...S[4]} size={120} color={C.paper} />
+          <Words {...S[4]} size={f(120)} color={C.paper} />
           <Strike at={S[4].end - 0.1} />
         </div>
       </Show>
@@ -242,6 +245,7 @@ const POSTS = [
   { seg: 8, label: "Day 67 · Aspiration", bg: C.lemon, fg: C.ink },
 ];
 const Feed: React.FC = () => {
+  const { y, f } = useL();
   const sec = useSec();
   const shown = POSTS.filter((p) => sec >= S[p.seg].start).length;
   return (
@@ -249,22 +253,22 @@ const Feed: React.FC = () => {
       <Show
         a={S[5].start}
         b={S[6].start - 0.15}
-        style={{ left: 70, right: 70, top: 560 }}
+        style={{ left: 70, right: 70, top: y(560) }}
       >
         <Words
           {...S[5]}
           text="For 90 days, his feed changed what fishing meant."
-          size={128}
+          size={f(128)}
           accent={["fishing", "meant."]}
         />
       </Show>
       <Show
         a={S[6].start - 0.1}
         b={99}
-        style={{ left: 70, right: 70, top: 220 }}
+        style={{ left: 70, right: 70, top: y(220) }}
       >
         <div style={{ textAlign: "center" }}>
-          <Label size={30}>Jacob&rsquo;s feed</Label>
+          <Label size={f(30)}>Jacob&rsquo;s feed</Label>
         </div>
       </Show>
       {POSTS.map((p, i) => {
@@ -279,9 +283,9 @@ const Feed: React.FC = () => {
             style={{
               position: "absolute",
               left: 140,
-              top: 360,
+              top: y(360),
               width: 800,
-              height: 1000,
+              height: y(1000),
               borderRadius: 26,
               background: p.bg,
               color: p.fg,
@@ -290,25 +294,25 @@ const Feed: React.FC = () => {
               flexDirection: "column",
               justifyContent: "space-between",
               boxShadow: "0 60px 100px -50px rgba(17,17,15,.6)",
-              transform: `translateY(${(1 - ease) * 1200 - depth * 70}px) scale(${1 - depth * 0.07}) rotate(${(i - 1) * 2.5}deg)`,
+              transform: `translateY(${(1 - ease) * y(1200) - depth * y(70)}px) scale(${1 - depth * 0.07}) rotate(${(i - 1) * 2.5}deg)`,
               opacity: depth > 1 ? 0.5 : 1,
               zIndex: 10 + i,
             }}
           >
             <Label
-              size={28}
+              size={f(28)}
               color={p.fg === C.ink ? C.ink : "rgba(244,241,234,.7)"}
             >
               {p.label}
             </Label>
-            <Words {...s} size={118} color={p.fg} align="left" />
+            <Words {...s} size={f(118)} color={p.fg} align="left" />
             <div
               style={{
                 display: "flex",
                 gap: 30,
                 fontFamily: FONT,
                 fontWeight: 800,
-                fontSize: 30,
+                fontSize: f(30),
                 opacity: 0.7,
               }}
             >
@@ -325,6 +329,7 @@ const Feed: React.FC = () => {
 
 /* ---------------- 4 · Fishing means time with his son ---------------- */
 const SonScene: React.FC = () => {
+  const { y, f } = useL();
   const sec = useSec();
   const son = ramp(sec, S[11].start + 0.6, S[11].start + 1.1);
   const rod = usePopAt(S[12].start + 0.2);
@@ -334,38 +339,38 @@ const SonScene: React.FC = () => {
       <Show
         a={S[9].start}
         b={S[10].start - 0.1}
-        style={{ left: 70, right: 70, top: 300 }}
+        style={{ left: 70, right: 70, top: y(300) }}
       >
-        <Words {...S[9]} text="By day 90," size={170} />
+        <Words {...S[9]} text="By day 90," size={f(170)} />
       </Show>
       <Show
         a={S[10].start}
         b={S[11].start - 0.1}
-        style={{ left: 70, right: 70, top: 280 }}
+        style={{ left: 70, right: 70, top: y(280) }}
       >
         <Words
           {...S[10]}
           text="Fishing stopped meaning fishing."
-          size={140}
+          size={f(140)}
           accent={["meaning"]}
         />
       </Show>
       <Show
         a={S[11].start}
         b={S[12].start - 0.1}
-        style={{ left: 70, right: 70, top: 250 }}
+        style={{ left: 70, right: 70, top: y(250) }}
       >
-        <Words {...S[11]} size={112} accent={["with", "his", "son."]} />
+        <Words {...S[11]} size={f(112)} accent={["with", "his", "son."]} />
       </Show>
       <Show
         a={S[12].start}
         b={S[13].start - 0.1}
-        style={{ left: 70, right: 70, top: 260 }}
+        style={{ left: 70, right: 70, top: y(260) }}
       >
-        <Words {...S[12]} size={140} accent={["rod."]} />
+        <Words {...S[12]} size={f(140)} accent={["rod."]} />
       </Show>
-      <Show a={S[13].start} b={99} style={{ left: 70, right: 70, top: 250 }}>
-        <Words {...S[13]} size={124} accent={["his", "idea."]} />
+      <Show a={S[13].start} b={99} style={{ left: 70, right: 70, top: y(250) }}>
+        <Words {...S[13]} size={f(124)} accent={["his", "idea."]} />
       </Show>
 
       <div
@@ -376,7 +381,7 @@ const SonScene: React.FC = () => {
           transform: `translateX(calc(-50% - ${son * 170}px))`,
         }}
       >
-        <Jacob height={820} />
+        <Jacob height={y(820)} />
       </div>
       <div
         style={{
@@ -387,26 +392,26 @@ const SonScene: React.FC = () => {
           transform: `translateX(${170 + (1 - son) * 300}px)`,
         }}
       >
-        <Son height={460} />
+        <Son height={y(460)} />
       </div>
       <div
         style={{
           position: "absolute",
           right: 60,
-          top: 700,
+          top: y(700),
           opacity: (rod > 0.01 ? 1 : 0) * (1 - rodOut),
           transform: `scale(${0.6 + rod * 0.4}) rotate(4deg)`,
           transformOrigin: "80% 0",
         }}
       >
         <Card style={{ width: 380, padding: 26, textAlign: "center" }}>
-          <Rod size={220} />
-          <Label size={20}>Day 91 &middot; Only now: the rod</Label>
+          <Rod size={f(220)} />
+          <Label size={f(20)}>Day 91 &middot; Only now: the rod</Label>
         </Card>
       </div>
       <Bubble
         at={S[13].start + 0.15}
-        style={{ left: 300, top: 760, width: 520 }}
+        style={{ left: 300, top: y(760), width: 520 }}
       >
         Son. Do you want to go fishing?
       </Bubble>
@@ -416,25 +421,26 @@ const SonScene: React.FC = () => {
 
 /* ---------------- 5 · That's a belief shift. BSM Bot 2.0 ---------------- */
 const Shift: React.FC = () => {
+  const { y, f } = useL();
   const name = usePopAt(wordAt(15, 1), 200);
   return (
     <In scene="shift">
       <Show
         a={S[14].start}
         b={S[15].start - 0.1}
-        style={{ left: 70, right: 70, top: 700 }}
+        style={{ left: 70, right: 70, top: y(700) }}
       >
         <Words
           {...S[14]}
-          size={170}
+          size={f(170)}
           color={C.paper}
           accent={["belief", "shift."]}
           accentColor={C.accent}
         />
       </Show>
-      <Show a={S[15].start} b={99} style={{ left: 60, right: 60, top: 560 }}>
+      <Show a={S[15].start} b={99} style={{ left: 60, right: 60, top: y(560) }}>
         <div style={{ textAlign: "center" }}>
-          <Label size={30} color={C.mutedInv}>
+          <Label size={f(30)} color={C.mutedInv}>
             Introducing
           </Label>
           <div
@@ -442,7 +448,7 @@ const Shift: React.FC = () => {
               marginTop: 20,
               fontFamily: FONT,
               fontWeight: 900,
-              fontSize: 150,
+              fontSize: f(150),
               lineHeight: 0.85,
               letterSpacing: "-0.06em",
               textTransform: "uppercase",
@@ -454,12 +460,12 @@ const Shift: React.FC = () => {
           >
             BSM Bot 2.0
           </div>
-          <div style={{ marginTop: 70 }}>
+          <div style={{ marginTop: y(70) }}>
             <Words
               text="Builds one for your business."
               start={wordAt(15, 4)}
               end={S[15].end}
-              size={84}
+              size={f(84)}
               color={C.mutedInv}
               accent={["business."]}
               accentColor={C.accent}
@@ -480,6 +486,7 @@ const RESEARCH = [
   "Market saturation",
 ];
 const Demo: React.FC = () => {
+  const { y, f, pick } = useL();
   const sec = useSec();
   const frame = useCurrentFrame();
   const typed = TYPED.slice(
@@ -499,7 +506,7 @@ const Demo: React.FC = () => {
           key={i}
           a={S[i].start}
           b={k < 2 ? S[i + 1].start - 0.1 : 99}
-          style={{ left: 70, right: 70, top: 230 }}
+          style={{ left: 70, right: 70, top: y(230) }}
         >
           <Words
             {...S[i]}
@@ -513,7 +520,7 @@ const Demo: React.FC = () => {
       <Show
         a={S[16].start}
         b={S[17].start - 0.1}
-        style={{ left: 70, right: 70, top: 860 }}
+        style={{ left: 70, right: 70, top: y(860) }}
       >
         <div
           style={{
@@ -525,7 +532,7 @@ const Demo: React.FC = () => {
             background: C.card,
             fontFamily: FONT,
             fontWeight: 800,
-            fontSize: 52,
+            fontSize: f(52),
             letterSpacing: "-0.03em",
           }}
         >
@@ -545,7 +552,7 @@ const Demo: React.FC = () => {
               padding: "12px 18px",
               borderRadius: 12,
               background: sec > S[16].end - 0.15 ? C.accent : C.paper2,
-              fontSize: 24,
+              fontSize: f(24),
               fontWeight: 900,
               letterSpacing: "0.08em",
               textTransform: "uppercase",
@@ -560,10 +567,10 @@ const Demo: React.FC = () => {
       <Show
         a={S[17].start}
         b={S[18].start - 0.1}
-        style={{ left: 70, right: 70, top: 780 }}
+        style={{ left: 70, right: 70, top: pick(780, 950) }}
       >
         <Card dark style={{ padding: 44 }}>
-          <Label size={24} color={C.mutedInv}>
+          <Label size={f(24)} color={C.mutedInv}>
             Market research &middot; running
           </Label>
           <div style={{ marginTop: 26, display: "grid", gap: 26 }}>
@@ -583,7 +590,7 @@ const Demo: React.FC = () => {
                   <span
                     style={{
                       fontWeight: 800,
-                      fontSize: 36,
+                      fontSize: f(36),
                       letterSpacing: "-0.01em",
                     }}
                   >
@@ -609,7 +616,7 @@ const Demo: React.FC = () => {
                   <b
                     style={{
                       color: C.lemon,
-                      fontSize: 36,
+                      fontSize: f(36),
                       opacity: fill >= 1 ? 1 : 0,
                     }}
                   >
@@ -635,13 +642,13 @@ const Demo: React.FC = () => {
             <b
               style={{
                 fontWeight: 900,
-                fontSize: 42,
+                fontSize: f(42),
                 letterSpacing: "-0.03em",
               }}
             >
               A belief nobody owns yet
             </b>
-            <Stamp at={tBelief + 0.1} color={C.ok} size={26}>
+            <Stamp at={tBelief + 0.1} color={C.ok} size={f(26)}>
               Open
             </Stamp>
           </div>
@@ -652,7 +659,7 @@ const Demo: React.FC = () => {
       <Show
         a={tStrategy - 0.1}
         b={99}
-        style={{ left: 70, right: 70, top: 780 }}
+        style={{ left: 70, right: 70, top: pick(780, 950) }}
       >
         <Card
           style={{
@@ -663,12 +670,12 @@ const Demo: React.FC = () => {
           }}
         >
           <div>
-            <Label size={22}>Master strategy</Label>
+            <Label size={f(22)}>Master strategy</Label>
             <b
               style={{
                 display: "block",
                 marginTop: 8,
-                fontSize: 48,
+                fontSize: f(48),
                 fontWeight: 900,
                 letterSpacing: "-0.03em",
               }}
@@ -678,7 +685,7 @@ const Demo: React.FC = () => {
           </div>
         </Card>
         <div style={{ position: "absolute", right: 30, top: -26 }}>
-          <Stamp at={tStrategy + 0.35} color={C.ok} size={24}>
+          <Stamp at={tStrategy + 0.35} color={C.ok} size={f(24)}>
             Approved &#10003;
           </Stamp>
         </div>
@@ -686,7 +693,7 @@ const Demo: React.FC = () => {
       <Show
         a={tCampaign - 0.1}
         b={99}
-        style={{ left: 70, right: 70, top: 1040 }}
+        style={{ left: 70, right: 70, top: pick(1040, 1200) }}
       >
         <Card
           dark
@@ -697,13 +704,13 @@ const Demo: React.FC = () => {
             padding: "30px 40px",
           }}
         >
-          <Label size={22} color={C.mutedInv}>
+          <Label size={f(22)} color={C.mutedInv}>
             90-day campaign &middot; post
           </Label>
           <b
             style={{
               marginLeft: "auto",
-              fontSize: 120,
+              fontSize: f(120),
               fontWeight: 900,
               letterSpacing: "-0.05em",
               lineHeight: 0.9,
@@ -712,21 +719,25 @@ const Demo: React.FC = () => {
           >
             {String(count).padStart(2, "0")}
           </b>
-          <span style={{ fontSize: 40, fontWeight: 900, color: C.mutedInv }}>
+          <span style={{ fontSize: f(40), fontWeight: 900, color: C.mutedInv }}>
             / 90
           </span>
         </Card>
       </Show>
-      <Show a={tScript - 0.1} b={99} style={{ left: 70, right: 70, top: 1290 }}>
+      <Show
+        a={tScript - 0.1}
+        b={99}
+        style={{ left: 70, right: 70, top: pick(1290, 1440) }}
+      >
         <Card style={{ padding: "30px 40px", background: "#f7e5a8" }}>
-          <Label size={22} color={C.gold}>
+          <Label size={f(22)} color={C.gold}>
             Post #6 &middot; Script &amp; caption
           </Label>
           <b
             style={{
               display: "block",
               marginTop: 8,
-              fontSize: 46,
+              fontSize: f(46),
               fontWeight: 900,
               letterSpacing: "-0.03em",
             }}
@@ -754,15 +765,16 @@ const Demo: React.FC = () => {
 
 /* ---------------- 7 · One sentence in ---------------- */
 const Out: React.FC = () => {
+  const { y, f } = useL();
   const split = wordAt(19, 3);
   return (
     <In scene="out">
-      <div style={{ position: "absolute", left: 70, right: 70, top: 640 }}>
+      <div style={{ position: "absolute", left: 70, right: 70, top: y(640) }}>
         <Words
           text="One sentence in."
           start={S[19].start}
           end={split}
-          size={160}
+          size={f(160)}
           color={C.paper}
         />
         <div style={{ height: 30 }} />
@@ -770,7 +782,7 @@ const Out: React.FC = () => {
           text="An entire campaign out."
           start={split}
           end={S[19].end}
-          size={160}
+          size={f(160)}
           color={C.mutedInv}
         />
       </div>
@@ -780,6 +792,7 @@ const Out: React.FC = () => {
 
 /* ---------------- 8 · Close and CTA ---------------- */
 const Close: React.FC = () => {
+  const { y, f } = useL();
   const cta = usePopAt(S[21].end - 0.1, 200);
   return (
     <In scene="close">
@@ -788,7 +801,7 @@ const Close: React.FC = () => {
           position: "absolute",
           left: 70,
           right: 70,
-          top: 260,
+          top: y(260),
           textAlign: "center",
         }}
       >
@@ -796,19 +809,19 @@ const Close: React.FC = () => {
           style={{
             fontFamily: FONT,
             fontWeight: 900,
-            fontSize: 200,
+            fontSize: f(200),
             lineHeight: 0.6,
             color: C.accent,
           }}
         >
           &ldquo;
         </div>
-        <Words {...S[20]} size={120} color={C.paper} />
+        <Words {...S[20]} size={f(120)} color={C.paper} />
         <div style={{ height: 40 }} />
         <Words
           {...S[21]}
           text="It should create them."
-          size={140}
+          size={f(140)}
           color={C.accent}
         />
       </div>
@@ -817,7 +830,7 @@ const Close: React.FC = () => {
           position: "absolute",
           left: 0,
           right: 0,
-          top: 1450,
+          top: y(1450),
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -834,7 +847,7 @@ const Close: React.FC = () => {
             color: C.ink,
             fontFamily: FONT,
             fontWeight: 900,
-            fontSize: 52,
+            fontSize: f(52),
             letterSpacing: "-0.01em",
             boxShadow: "0 30px 60px -24px rgba(210,242,75,.6)",
           }}
@@ -845,7 +858,7 @@ const Close: React.FC = () => {
           style={{
             fontFamily: FONT,
             fontWeight: 700,
-            fontSize: 30,
+            fontSize: f(30),
             color: C.mutedInv,
           }}
         >

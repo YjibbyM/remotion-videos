@@ -6,6 +6,7 @@ import {
   spring,
   staticFile,
   useCurrentFrame,
+  useVideoConfig,
 } from "remotion";
 import { loadFont } from "@remotion/fonts";
 import { FPS, wordTimes } from "./timing";
@@ -37,6 +38,19 @@ loadFont({
   url: staticFile("fonts/Archivo-Variable-latin.woff2"),
   weight: "100 900",
 }).then(() => continueRender(fontHandle));
+
+// Layout was designed at 1080x1920. Other heights (e.g. 4:5 at 1080x1350)
+// compress vertical positions fully and type a little less, since the width stays.
+export const useL = () => {
+  const k = useVideoConfig().height / 1920;
+  const fk = k === 1 ? 1 : 0.4 + 0.57 * k;
+  return {
+    y: (n: number) => n * k,
+    f: (n: number) => Math.round(n * fk),
+    // Position given as [9:16 design value, 4:5 design value].
+    pick: (tall: number, short: number) => (k === 1 ? tall : short) * k,
+  };
+};
 
 export const useSec = () => useCurrentFrame() / FPS;
 
@@ -253,6 +267,7 @@ export const Bubble: React.FC<{
   style?: React.CSSProperties;
 }> = ({ children, at, style }) => {
   const p = usePopAt(at, 280);
+  const { f } = useL();
   return (
     <div
       style={{
@@ -263,7 +278,7 @@ export const Bubble: React.FC<{
         background: "#fff",
         fontFamily: FONT,
         fontWeight: 800,
-        fontSize: 44,
+        fontSize: f(44),
         lineHeight: 1.1,
         letterSpacing: "-0.02em",
         color: C.ink,

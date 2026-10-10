@@ -68,6 +68,14 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
       />
+      <Composition
+        id="BsmJacobAd4x5"
+        component={BsmJacobAd}
+        durationInFrames={BSM_JACOB_FRAMES}
+        fps={30}
+        width={1080}
+        height={1350}
+      />
     </>
   );
 };
