@@ -560,7 +560,7 @@ const Demo: React.FC = () => {
       <Show
         a={S[17].start}
         b={S[18].start - 0.1}
-        style={{ left: 70, right: 70, top: 640 }}
+        style={{ left: 70, right: 70, top: 780 }}
       >
         <Card dark style={{ padding: 44 }}>
           <Label size={24} color={C.mutedInv}>
@@ -652,7 +652,7 @@ const Demo: React.FC = () => {
       <Show
         a={tStrategy - 0.1}
         b={99}
-        style={{ left: 70, right: 70, top: 640 }}
+        style={{ left: 70, right: 70, top: 780 }}
       >
         <Card
           style={{
@@ -686,7 +686,7 @@ const Demo: React.FC = () => {
       <Show
         a={tCampaign - 0.1}
         b={99}
-        style={{ left: 70, right: 70, top: 900 }}
+        style={{ left: 70, right: 70, top: 1040 }}
       >
         <Card
           dark
@@ -717,7 +717,7 @@ const Demo: React.FC = () => {
           </span>
         </Card>
       </Show>
-      <Show a={tScript - 0.1} b={99} style={{ left: 70, right: 70, top: 1160 }}>
+      <Show a={tScript - 0.1} b={99} style={{ left: 70, right: 70, top: 1290 }}>
         <Card style={{ padding: "30px 40px", background: "#f7e5a8" }}>
           <Label size={22} color={C.gold}>
             Post #6 &middot; Script &amp; caption
