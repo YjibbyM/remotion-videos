@@ -4,6 +4,7 @@ import { Logo } from "./HelloWorld/Logo";
 import { Title } from "./HelloWorld/Title";
 import { TextHookReel } from "./TextHookReel";
 import { BSM_JACOB_FRAMES, BsmJacobAd } from "./BsmJacobAd";
+import { GUINNESS_FRAMES, GuinnessDoc } from "./GuinnessDoc";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -72,6 +73,22 @@ export const RemotionRoot: React.FC = () => {
         id="BsmJacobAd4x5"
         component={BsmJacobAd}
         durationInFrames={BSM_JACOB_FRAMES}
+        fps={30}
+        width={1080}
+        height={1350}
+      />
+      <Composition
+        id="GuinnessDoc"
+        component={GuinnessDoc}
+        durationInFrames={GUINNESS_FRAMES}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="GuinnessDoc4x5"
+        component={GuinnessDoc}
+        durationInFrames={GUINNESS_FRAMES}
         fps={30}
         width={1080}
         height={1350}
