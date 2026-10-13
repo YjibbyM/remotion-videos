@@ -933,7 +933,7 @@ export const GUINNESS_FRAMES = Math.round(G_DURATION * FPS);
 export const GuinnessDoc: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: P.paper }}>
-      <Audio src={staticFile("vo/guinness-vo.wav")} />
+      <Audio src={staticFile("vo/guinness-vo.wav")} volume={1.33} />
       <Records />
       <Argument />
       <BookScene />
